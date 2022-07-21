@@ -1,23 +1,63 @@
-# Compiled class file
-*.class
+package br.pucrs.sicredi.beans;
 
-# Log file
-*.log
+import java.util.ArrayList;
+import java.util.List;
 
-# BlueJ files
-*.ctxt
+public class StudentRegistration {
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+	private List<Student> studentRecords;
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+	private static StudentRegistration stdregd = null;
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+	private StudentRegistration(){
+		studentRecords = new ArrayList<Student>();
+	}
+
+	public static StudentRegistration getInstance() {
+
+		if(stdregd == null) {
+			stdregd = new StudentRegistration();
+			return stdregd;
+		}
+		else {
+			return stdregd;
+		}
+	}
+
+	public void add(Student std) {
+		studentRecords.add(std);
+	}
+
+	public String upDateStudent(Student std) {
+
+		for(int i=0; i<studentRecords.size(); i++)
+		{
+			Student stdn = studentRecords.get(i);
+			if(stdn.getRegistrationNumber().equals(std.getRegistrationNumber())) {
+				studentRecords.set(i, std);//update the new record
+				return "Update successful";
+			}
+		}
+
+		return "Update un-successful";
+	}
+
+	public String deleteStudent(String registrationNumber) {
+
+		for(int i=0; i<studentRecords.size(); i++)
+		{
+			Student stdn = studentRecords.get(i);
+			if(stdn.getRegistrationNumber().equals(registrationNumber)){
+				studentRecords.remove(i);//update the new record
+				return "Delete successful";
+			}
+		}
+
+		return "Delete un-successful";
+	}
+
+	public List<Student> getStudentRecords() {
+		return studentRecords;
+	}
+
+}
